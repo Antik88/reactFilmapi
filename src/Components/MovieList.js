@@ -11,27 +11,8 @@ class MovieList extends React.Component {
         };
     }
 
-    componentDidMount() {
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTI5YjRjYjgzN2VmMzI3ZjM3ZDljODFhMWY1YmJmNSIsInN1YiI6IjY1MDE4NjZjNmEyMjI3MDExYTdiMzhmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zjw4IubMn1_IFnl4AsxZT0lPL87TpSp7f3jNv1m5FtA' 
-            }
-        };
-
-        fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ results: data.results });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
     render() {
-        const { results } = this.state;
+        const { results } = this.props;
 
         return (
             results && results.length !== 0 ?

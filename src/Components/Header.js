@@ -5,18 +5,18 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: '' // Добавляем состояние для хранения значения поискового запроса
+      searchQuery: ''
     };
   }
 
   handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      this.props.onSearch(this.state.searchQuery); // Вызываем функцию onSearch и передаем поисковый запрос
+      this.props.onSearch(this.state.searchQuery);
     }
   };
 
   handleInputChange = (event) => {
-    this.setState({ searchQuery: event.target.value }); // Обновляем состояние поискового запроса при изменении поля ввода
+    this.setState({ searchQuery: event.target.value });
   };
 
   render() {

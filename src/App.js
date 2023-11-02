@@ -8,7 +8,7 @@ import Header from './Components/Header';
 class App extends React.Component {
   handleSearch = async (searchQuery) => {
     try {
-      const apiKey = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTI5YjRjYjgzN2VmMzI3ZjM3ZDljODFhMWY1YmJmNSIsInN1YiI6IjY1MDE4NjZjNmEyMjI3MDExYTdiMzhmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zjw4IubMn1_IFnl4AsxZT0lPL87TpSp7f3jNv1m5FtA' 
+      const apiKey = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTI5YjRjYjgzN2VmMzI3ZjM3ZDljODFhMWY1YmJmNSIsInN1YiI6IjY1MDE4NjZjNmEyMjI3MDExYTdiMzhmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zjw4IubMn1_IFnl4AsxZT0lPL87TpSp7f3jNv1m5FtA'
       const url = `https://api.themoviedb.org/3/search/movie?language=en-US&page=1&query=${encodeURIComponent(searchQuery)}&api_key=${apiKey}`;
 
       const response = await fetch(url);
@@ -20,11 +20,30 @@ class App extends React.Component {
     }
   };
 
+  componentDidMount() {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTI5YjRjYjgzN2VmMzI3ZjM3ZDljODFhMWY1YmJmNSIsInN1YiI6IjY1MDE4NjZjNmEyMjI3MDExYTdiMzhmZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Zjw4IubMn1_IFnl4AsxZT0lPL87TpSp7f3jNv1m5FtA'
+      }
+    };
+
+    fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ results: data.results });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
   render() {
     return (
       <div className="App">
         <Header onSearch={this.handleSearch} />
-        <MovieList />
+        <MovieList results={this.results}/>
         <Footer />
       </div>
     );
